@@ -1,7 +1,7 @@
 'use client'
 
 import { userApi } from '@/api/user'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -40,6 +40,14 @@ export default function Login() {
     setIsLogin(true)
   }
 
+  const queryClient = useQueryClient()
+  const { mutate: createUser } = useMutation({
+    mutationFn: userApi.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user-list'] })
+    },
+  })
+
   return (
     <>
       <div className="w-full max-w-sm min-w-[200px] m-4">
@@ -65,6 +73,14 @@ export default function Login() {
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>
         Login
       </button>
+      <div className="p-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => createUser({ username: 'user1', email: 'user1@example.com', password: 'password1' })}
+        >
+          User Create1
+        </button>
+      </div>
     </>
   )
 }
