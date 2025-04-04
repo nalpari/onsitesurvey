@@ -73,14 +73,6 @@ export default function Login() {
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>
         Login
       </button>
-      <div className="p-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => createUser({ username: 'user1', email: 'user1@example.com', password: 'password1' })}
-        >
-          User Create1
-        </button>
-      </div>
     </>
   )
 }
